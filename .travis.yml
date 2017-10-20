@@ -1,10 +1,17 @@
 language: java
 sudo: false
 deploy:
-    provider: releases
-    file: build/libs/xlr-utilities-plugin-1.0.0-beta.jar
-    skip_cleanup: true
-    on:
-        all_branches: true
-        tags: true
-        repo: xebialabs-community/xlr-utilities-plugin
+  provider: releases
+  file: build/libs/xlr-utilities-plugin-1.0.0-beta.jar
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/xlr-utilities-plugin
+  api_key:
+    secure:
+      secure: VGBvmTVsLC5u6RmX+UzzcEoCd/YrVZpn/6KhYMnLSFlIm54qQC4NQn3/A0PUbgRwJZYcqnCUfQVGmv6xWU3hXr2b9mm986BAG4tvy4RdjmRA01VRkafYU8q7HyQnsH6/N39ez9j1wyMA5yE+GN7bppuYMqtgvm+Eio0vtzbukjmVig/z6+eJf9U28IT4PDD3MNTfnJuGMErNzhF2d3sURXuAzkvgSV+hKCh2aNT8DqRBUQ0FIjI720FBBqHMQSA1vObyhwGSP1yVFM7qTOberl2BX05jaNRtaxqFYM8gTo/YlF690d7P0thUV/XmWb7raJMiTwCIuuwOWKb9jB8i8TBDonOTfdNvs4BaprNoHgSK965wC+wmLNwpv2+tdnf932DTd+w3Oxw0Vfhm2C1bd2GYj1fWIilQVkZOv/ig1yh4MD7ixPh5h5xETkV7gMAbOrYakEMqDTl9ZSH4cVBCooRs8JlRnlKY4DNG9HCLKiZydM0ZgBL3aVXLtbaCRv2gBSEorC1Yo4GO0wYfEti+3cwaMOfuJ3EiJX9AP1db7INao2SuXiP5IsNmKqjkwgblnnjOKXVfHEKnvTMwntnOh+lpXFl/QWmAGBPZMtXex/zHh8gRYYp/q9GIRgyGHs+ctrdk8brCjrXiApMrRNjbD6Cgaoa5Ld1A8pdHr9QCwnw=
+notifications:
+  hipchat:
+    rooms:
+      secure: V/udytEyJlj3D3BtRPB/0uHTLWDtgU9G2hGZk6c0AIjBkr8l3Oay8LU9k9T1xaYcv6o7QKQUFta3WYjZnLt/FTVgVgQQzYhY5o3GK/SPftPbeFJefZpdk4kjA20qilCETdELonoNNly+zkSqKy0/Okm3XYwu2f7yk4L+yqXTuzKHcWCi9Af0a5Id7Qf5+HHdQ8BPZrNm9QY5C71U34IjUbn/EXp/uuPcrznf9twRgjQU+FCij2L9FodalMSByOjivlzdOE1ZNrZUS/Zp+y+T+U68p9D0tnNDr+oiOZP+Qs4Fp2yhhXHbnYxyAtk4DiJX6gs6vXSBZfoyCbAwGcfwLPY/AcB4It5jC7H7rdU+gywPf6JFC+JdT42ebgGvj59Smu7bM3yKo4UkZf7p4EB63mXxjO/syw9CLl1Palti108eofnSxSPcRvGUvi3xMHe/oJGQNVyI562vMhtnputPrYMDt/uDChAyaWAOaKTqtCRosr19QnJuCJ5jD0HbGAs0//B8vzPX01bSE/dIGhWRLxCVhSOWynr1XtXFk3ttuCC+YXyjLbQ4Y+O6DlCQE8vefpAg9cHJFQYE7RCw4zIxYd+ettcUg1CA2BEXGReNBsKAP5pcCXfltDKL/hxPUAOHw59PRaO4eU28VXtxlVgOVIDPxKkUw8DqSmng5JI4EvM=
