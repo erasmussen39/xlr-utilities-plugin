@@ -13,14 +13,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
            xmlns="http://www.xebialabs.com/deployit/synthetic"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <!-- Simple Task Configurations -->
-    <type type="simple.Task" extends="xlrelease.PythonScript" virtual="true">
-        <property name="scriptLocation" default="simple/Task.py" hidden="true"/>
-        <property name="iconLocation" default="simple/simple.png" hidden="true"/>
+    <!-- Utilities Task Configurations -->
+    <type type="utilities.Task" extends="xlrelease.PythonScript" virtual="true">
+        <property name="scriptLocation" default="utilities/Task.py" hidden="true"/>
+        <property name="iconLocation" default="utilities/utilities.png" hidden="true"/>
         <property name="output" category="output" kind="string" size="large" description="The output returned from execution of the task."/>
     </type>
 
-    <type type="simple.ExampleTask" extends="simple.Task" label="Simple Example Task">
-        <property name="example_property" category="input" label="Example Property" required="true" description="An example property defined for my task."/>
+    <type type="utilities.GenerateSubReleases" extends="utilities.Task" label="Generate Sub-Releases">
+        <property name="release_templates" category="input" kind="list_of_string" label="Release Templates" required="true"
+                  description="A list of release template names instantiate the sub-releases from in order."/>
+        <property name="release_titles" category="input" kind="list_of_string" label="Release Titles" required="false"
+                  description="A list of release titles, if no title is specified the name of the template will be used for the release title."/>
+        <property name="create_gates" category="input" kind="boolean" required="false" label="Create Gates?" default="true"
+                  description="Setting to determine if corresponding Gate tasks should be created for each sub-release."/>
+        <property name="parallel" category="input" kind="boolean" required="false" label="Execute Parallel?" default="false"
+                  description="Setting to determine if the sub-releases should be executed in parallel (sequential is default)."/>
+        <property name="release_variables" category="input" kind="list_of_string" required="false" label="Release Variables"
+                  description="Release variables (String only) to be passed to the sub-release in list format. Example: KEY1=VAL1,KEY2=VAL2"/>
     </type>
 </synthetic>
