@@ -18,10 +18,10 @@ Copy the plugin JAR file into the SERVER_HOME/plugins directory of XL Release.
 
 ## Overview
 This plugin is intended to provide a variety of useful utility tasks for XL Release.
-![Generate Sub-Releases](images/generate_sub_releases.png)
 ## Tasks
 #### utilties.GenerateSubReleases
 Task used to dynamically generate Sub-Releases.
+![Generate Sub-Releases](images/generate_sub_releases.png)
 ###### Release Templates
 The list of release templates used to create the sub-releases (required).
 ###### Release Titles
