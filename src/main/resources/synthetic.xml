@@ -32,4 +32,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="release_variables" category="input" kind="list_of_string" required="false" label="Release Variables"
                   description="Release variables (String only) to be passed to the sub-release in list format. Example: KEY1=VAL1,KEY2=VAL2"/>
     </type>
+
+    <!-- Tile Configuration -->
+    <type type="xlrelease.SubReleasesTile" label="Sub-Releases Tile" extends="xlrelease.Tile">
+        <property name="uri" hidden="true" default="xlrelease/SubReleasesTile/sub-releases-tile-summary-view.html"/>
+        <property name="title" description="Tile title." default="Sub-Releases Summary"/>
+    </type>
 </synthetic>

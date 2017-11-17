@@ -4,7 +4,9 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c004d5eaa7544b6d8f50844f2c46e56e)](https://www.codacy.com/app/erasmussen39/xlr-utilities-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erasmussen39/xlr-utilities-plugin&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/797d2a29a35f9f129c8e/maintainability)](https://codeclimate.com/github/erasmussen39/xlr-utilities-plugin/maintainability)
 [![License: MIT][xlr-utilities-plugin-license-image]][xlr-utilities-plugin-license-url]
-[![Github All Releases][xlr-utilities-plugin-downloads-image]]()
+
+[//]: # (Add the below line back in if this gets moved to xebialabs-community)
+[//]: # ([![Github All Releases][xlr-utilities-plugin-downloads-image]]())
 
 [xlr-utilities-plugin-license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [xlr-utilities-plugin-license-url]: https://opensource.org/licenses/MIT
@@ -17,7 +19,7 @@ This document describes the functionality provided by the xlr-utilities-plugin.
 Copy the plugin JAR file into the SERVER_HOME/plugins directory of XL Release.
 
 ## Overview
-This plugin is intended to provide a variety of useful utility tasks for XL Release.
+This plugin is intended to provide a variety of useful utility functionality for XL Release.
 ## Tasks
 #### utilties.GenerateSubReleases
 Task used to dynamically generate Sub-Releases.

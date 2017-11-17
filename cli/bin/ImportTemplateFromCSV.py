@@ -1,0 +1,80 @@
+import base64, csv, getpass, json, os.path, sys, urllib2
+
+print "CSV File:",
+csv_file = raw_input()
+if not os.path.isfile(csv_file):
+    print "Specified CSV file %s does not exist." % csv_file
+    sys.exit(1)
+print "New Template Name:",
+template_name = raw_input()
+print "Enter XL Release URL:",
+xlr_url = raw_input()
+print "Enter XL Release Username:",
+xlr_user = raw_input()
+xlr_pass = getpass.getpass("Enter XL Release Password: ")
+
+# Defaults
+if not xlr_url:
+    xlr_url = "http://localhost:5516"
+if not xlr_user:
+    xlr_user = "admin"
+if not xlr_pass:
+    xlr_pass = "admin"
+
+data = '''{
+  "id" : "Applications/Release1",
+  "type" : "xlrelease.Release",
+  "title" : "%s",
+  "scheduledStartDate" : "2017-10-21T21:05:07.014+02:00",
+  "status" : "TEMPLATE"
+}''' % template_name
+
+headers = {"Content-Type" : "application/json" , "Authorization" : "Basic %s" % base64.b64encode("%s:%s" % (xlr_user, xlr_pass))}
+
+request = urllib2.Request('%s/api/v1/templates/' % xlr_url, data, headers)
+response = urllib2.urlopen(request)
+
+template = json.load(response)
+
+if response.getcode() != 200:
+    raise Exception("Failed to create new template: %s" % template_name)
+
+# Delete unnecessary "New Phase"
+request = urllib2.Request('%s/api/v1/phases/%s' % (xlr_url, template['phases'][0]['id']), data, headers)
+request.get_method = lambda: 'DELETE'
+response = urllib2.urlopen(request)
+
+phases = []
+with open(csv_file, 'rb') as csvfile:
+    template_reader = csv.reader(csvfile, delimiter=',')
+    for row in template_reader:
+        if not row[0] in phases:
+            phases.append(row[0])
+
+phase_name_id_map = {}
+for phase_name in phases:
+    data = "{'id' : '', 'type' : 'xlrelease.Phase', 'title' : '%s', 'release' : '%s', 'status' : 'PLANNED'}" % (phase_name, template['id'])
+    request = urllib2.Request('%s/api/v1/phases/%s/phase' % (xlr_url, template['id']), data, headers)
+    response = urllib2.urlopen(request)
+    phase = json.load(response)
+    phase_name_id_map[phase_name] = phase['id']
+    if response.getcode() != 200:
+        raise Exception("Failed to create new phase: %s in template: %s" % (phase_name, template_name))
+
+# Create Tasks
+with open(csv_file, 'rb') as csvfile:
+    template_reader = csv.reader(csvfile, delimiter=',')
+    for row in template_reader:
+        phase_id = phase_name_id_map[row[0]]
+        data = "{'id' : '', 'type' : 'xlrelease.Task', 'title' : '%s', 'description' : '%s'}" % (row[1], row[2])
+        request = urllib2.Request('%s/api/v1/tasks/%s/tasks' % (xlr_url, phase_id), data, headers)
+        response = urllib2.urlopen(request)
+        task = json.load(response)
+        if response.getcode() != 200:
+            raise Exception("Failed to create new task %s." % row[1])
+        if row[3]:
+            request = urllib2.Request('%s/api/v1/tasks/%s/assign/%s' % (xlr_url, task['id'], row[3]), data=None, headers=headers)
+            request.get_method = lambda: 'POST'
+            response = urllib2.urlopen(request)
+        if response.getcode() != 200:
+            raise Exception("Failed to assign task %s to %s." % (row[1], row[3]))
