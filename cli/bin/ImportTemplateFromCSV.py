@@ -21,6 +21,8 @@ if not xlr_user:
 if not xlr_pass:
     xlr_pass = "admin"
 
+opener = urllib2.build_opener(urllib2.HTTPHandler)
+
 data = '''{
   "id" : "Applications/Release1",
   "type" : "xlrelease.Release",
@@ -32,7 +34,7 @@ data = '''{
 headers = {"Content-Type" : "application/json" , "Authorization" : "Basic %s" % base64.b64encode("%s:%s" % (xlr_user, xlr_pass))}
 
 request = urllib2.Request('%s/api/v1/templates/' % xlr_url, data, headers)
-response = urllib2.urlopen(request)
+response = opener.open(request)
 
 template = json.load(response)
 
@@ -42,7 +44,7 @@ if response.getcode() != 200:
 # Delete unnecessary "New Phase"
 request = urllib2.Request('%s/api/v1/phases/%s' % (xlr_url, template['phases'][0]['id']), data, headers)
 request.get_method = lambda: 'DELETE'
-response = urllib2.urlopen(request)
+response = opener.open(request)
 
 phases = []
 with open(csv_file, 'rb') as csvfile:
@@ -55,7 +57,7 @@ phase_name_id_map = {}
 for phase_name in phases:
     data = "{'id' : '', 'type' : 'xlrelease.Phase', 'title' : '%s', 'release' : '%s', 'status' : 'PLANNED'}" % (phase_name, template['id'])
     request = urllib2.Request('%s/api/v1/phases/%s/phase' % (xlr_url, template['id']), data, headers)
-    response = urllib2.urlopen(request)
+    response = opener.open(request)
     phase = json.load(response)
     phase_name_id_map[phase_name] = phase['id']
     if response.getcode() != 200:
@@ -68,13 +70,13 @@ with open(csv_file, 'rb') as csvfile:
         phase_id = phase_name_id_map[row[0]]
         data = "{'id' : '', 'type' : 'xlrelease.Task', 'title' : '%s', 'description' : '%s'}" % (row[1], row[2])
         request = urllib2.Request('%s/api/v1/tasks/%s/tasks' % (xlr_url, phase_id), data, headers)
-        response = urllib2.urlopen(request)
+        response = opener.open(request)
         task = json.load(response)
         if response.getcode() != 200:
             raise Exception("Failed to create new task %s." % row[1])
         if row[3]:
             request = urllib2.Request('%s/api/v1/tasks/%s/assign/%s' % (xlr_url, task['id'], row[3]), data=None, headers=headers)
             request.get_method = lambda: 'POST'
-            response = urllib2.urlopen(request)
+            response = opener.open(request)
         if response.getcode() != 200:
             raise Exception("Failed to assign task %s to %s." % (row[1], row[3]))

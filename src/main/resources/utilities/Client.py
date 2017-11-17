@@ -41,6 +41,17 @@ class Client(object):
         return variables['taskApi'].addTask(container, task).getId()
 
     @staticmethod
+    def get_release_vars(variables, iteration):
+        release_vars = []
+        for variable in variables['release_variables'][iteration].split(','):
+            key_value = variable.split("=")
+            v = StringVariable()
+            v.setKey(key_value[0])
+            v.setValue(key_value[1])
+            release_vars.append(v)
+        return release_vars
+
+    @staticmethod
     def generate_create_release_task(variables, release_title, template_name, iteration):
         task = variables['taskApi'].newTask("xlrelease.CreateReleaseTask")
         task.title = release_title
@@ -48,14 +59,7 @@ class Client(object):
         task.templateId = "%s" % Client.find_template_with_name(template_name, variables).getId()
         task.createdReleaseId = "${RELEASE_ID%s}" % iteration
         if len(variables['release_variables']) > iteration:
-            release_vars = []
-            for variable in variables['release_variables'][iteration].split(','):
-                key_value = variable.split("=")
-                v = StringVariable()
-                v.setKey(key_value[0])
-                v.setValue(key_value[1])
-                release_vars.append(v)
-            task.templateVariables = release_vars
+            task.templateVariables = Client.get_release_vars(variables, iteration)
         return task
 
     @staticmethod

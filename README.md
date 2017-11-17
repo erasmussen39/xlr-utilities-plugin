@@ -5,9 +5,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/797d2a29a35f9f129c8e/maintainability)](https://codeclimate.com/github/erasmussen39/xlr-utilities-plugin/maintainability)
 [![License: MIT][xlr-utilities-plugin-license-image]][xlr-utilities-plugin-license-url]
 
-[//]: # (Add the below line back in if this gets moved to xebialabs-community)
-[//]: # ([![Github All Releases][xlr-utilities-plugin-downloads-image]]())
-
 [xlr-utilities-plugin-license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [xlr-utilities-plugin-license-url]: https://opensource.org/licenses/MIT
 [xlr-utilities-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-utilities-plugin/total.svg
